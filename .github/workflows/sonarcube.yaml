@@ -40,6 +40,7 @@ jobs:
       - name: Install DotCover
         shell: powershell
         run: |
+          dotnet --version
           dotnet tool install --global JetBrains.dotCover.GlobalTool
       - name: Build and analyze
         env:
