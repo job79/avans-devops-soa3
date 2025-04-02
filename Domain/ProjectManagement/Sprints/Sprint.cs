@@ -1,4 +1,5 @@
 using Domain.Account;
+using Domain.SourceManagement;
 
 namespace Domain.ProjectManagement.Sprints;
 
@@ -8,6 +9,7 @@ public abstract class Sprint : CompositeComponent
    public DateTime StartDate { get; }
    public DateTime EndDate { get; }
    public ScrumMaster ScrumMaster { get; set; }
+   public Repository Repository { get;  }
    
    public ISprintState CurrentState { get; set; }
    public Planned Planned { get; set; }
@@ -19,12 +21,13 @@ public abstract class Sprint : CompositeComponent
    
    private readonly IList<ISubscriber<Sprint>> _subscribers = new List<ISubscriber<Sprint>>();
 
-   public Sprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster)
+   public Sprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository)
    {
       this.Name = name;
       this.StartDate = startDate;
       this.EndDate = endDate;
       this.ScrumMaster = scrumMaster;
+      this.Repository = repository;
 
       Planned = new Planned(this);
       InProgress = new InProgress(this);

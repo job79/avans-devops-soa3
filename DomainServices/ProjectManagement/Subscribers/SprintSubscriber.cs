@@ -8,7 +8,7 @@ public class SprintSubscriber : ISubscriber<Sprint>
 {
     private User _user;
     private ISendMethod _sendMethod;
-    
+
     public SprintSubscriber(User user, ISendMethod sendMethod)
     {
         this._user = user;
@@ -17,10 +17,24 @@ public class SprintSubscriber : ISubscriber<Sprint>
 
     public void Update(Sprint sprint)
     {
-        if (sprint.CurrentState is Closed)
+        switch (sprint.CurrentState)
         {
-            string state = sprint.CurrentState.GetType().Name;
-            this._sendMethod.SendMessage(this._user, $"Sprint has updated! State: {state}");
+            case Released:
+                var isSuccesful = sprint is ReleaseSprint { WorkflowResult.IsSuccessful: true };
+                if (!isSuccesful && sprint.ScrumMaster == this._user)
+                {
+                    this._sendMethod.SendMessage(this._user, "Sprint release pipeline failed");
+                }
+                else if (isSuccesful)
+                {
+                    this._sendMethod.SendMessage(this._user, "Sprint release pipeline was successful");
+                }
+
+                break;
+
+            case Closed:
+                this._sendMethod.SendMessage(this._user, "Sprint has been cancelled");
+                break;
         }
     }
 }
