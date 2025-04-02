@@ -1,0 +1,114 @@
+using Domain.Account;
+using Domain.ProjectManagement.Discussions;
+using Domain.ProjectManagement.Sprints;
+
+namespace Domain.ProjectManagement.BacklogItems;
+
+public class BacklogItem : CompositeComponent
+{
+    public string Title { get; }
+    public string Description { get; }
+    public int StoryPoints { get; }
+    public User Tester { get; set; }
+    public User? Developer { get; set; }
+    public Sprint Sprint { get; }
+    public IList<Discussion> Discussions { get; } = new List<Discussion>();
+    
+    public IBacklogItemState CurrentState { get; private set; }
+    public Todo Todo { get; set; }
+    public Doing Doing { get; set; }
+    public ReadyForTesting ReadyForTesting { get; set; }
+    public IBacklogItemState Testing { get; set; }
+    public Tested Tested { get; set; }
+    public Done Done { get; set; }
+    
+    private readonly IList<ISubscriber<BacklogItem>> _subscribers = new List<ISubscriber<BacklogItem>>();
+
+    public BacklogItem(string title, string description, int storyPoints, Sprint sprint, Tester tester)
+    {
+	    this.Title = title;
+		this.Description = description;
+		this.StoryPoints = storyPoints;
+		this.Sprint = sprint;
+		this.Tester = tester;
+
+		Todo = new Todo(this);
+		Doing = new Doing(this);
+		ReadyForTesting = new ReadyForTesting(this);
+		Testing = new Testing(this);
+		Tested = new Tested(this);
+		Done = new Done(this);
+
+		CurrentState = Todo;
+    }
+
+    public override void AcceptVisitor(Visitor visitor)
+    {
+	    visitor.VisitBacklogItem(this);
+	    base.AcceptVisitor(visitor);
+    }
+    
+    public void ToTodo()
+    {
+	    CurrentState.ToTodo();
+    }
+    
+    public void ToDoing()
+    {
+	    CurrentState.ToDoing();
+    }
+    
+    public void ToReadyForTesting()
+    {
+	    CurrentState.ToReadyForTesting();
+    }
+    
+    public void ToTesting()
+    {
+	    CurrentState.ToTesting();
+    }
+    
+    public void ToTested()
+    {
+	    CurrentState.ToTested();
+    }
+    
+    public void ToDone()
+    {
+	    CurrentState.ToDone();
+    }
+
+    public void SetState(IBacklogItemState backlogItemState)
+    {
+	    CurrentState = backlogItemState;
+	    this.Notify();
+    }
+
+    public void AddDiscussion(Discussion discussion)
+    {
+	    if (this.CurrentState is Done)
+	    {
+		    throw new InvalidOperationException();
+	    }
+	    
+	    this.Discussions.Add(discussion);
+    }
+    
+    public void Subscribe(ISubscriber<BacklogItem> subscriber)
+    {
+	    this._subscribers.Add(subscriber);
+    }
+
+    public void Unsubscribe(ISubscriber<BacklogItem> subscriber)
+    {
+	    this._subscribers.Remove(subscriber);
+    }
+   
+    private void Notify()
+    {
+	    foreach (var subscriber in this._subscribers)
+	    {
+		    subscriber.Update(this);
+	    }
+    }
+}
