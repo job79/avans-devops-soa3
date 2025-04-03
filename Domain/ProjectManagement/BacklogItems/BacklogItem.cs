@@ -10,7 +10,6 @@ public class BacklogItem : CompositeComponent
     public string Description { get; }
     public int StoryPoints { get; }
     public User Tester { get; set; }
-    public User? Developer { get; set; }
     public Sprint Sprint { get; }
     public List<Discussion> Discussions { get; } = new ();
     
@@ -23,6 +22,21 @@ public class BacklogItem : CompositeComponent
     public Done Done { get; set; }
     
     private readonly List<ISubscriber<BacklogItem>> _subscribers = new ();
+    
+    private User? _developer;
+
+    public User? Developer
+    {
+	    get => _developer;
+	    set
+	    {
+		    if (this.Sprint.Components.Count(x => x is BacklogItem b && b.Developer == value && b.CurrentState is not BacklogItems.Done) > 0)
+		    {
+			    throw new InvalidOperationException($"This developer is already working on another backlog item");
+		    }
+		    _developer = value;
+	    }
+    }
 
     public BacklogItem(string title, string description, int storyPoints, Sprint sprint, Tester tester)
     {
