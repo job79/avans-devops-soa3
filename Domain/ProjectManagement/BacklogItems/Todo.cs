@@ -3,7 +3,6 @@ using Domain.ProjectManagement.BacklogItems;
 namespace Domain.ProjectManagement.BacklogItems;
 
 //State pattern
-
 public class Todo : IBacklogItemState
 {
     private readonly BacklogItem _backlogItem;

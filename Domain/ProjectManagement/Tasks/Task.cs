@@ -12,7 +12,7 @@ public class Task : IComponent
     public Doing Doing { get; }
     public Done Done { get; }
 
-    private User? Assignee { get; set; }
+    public User? Assignee { get; set; }
     
     
     public Task(string title, string description)

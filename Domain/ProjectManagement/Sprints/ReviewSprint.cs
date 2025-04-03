@@ -5,7 +5,7 @@ namespace Domain.ProjectManagement.Sprints;
 
 public class ReviewSprint : Sprint
 {
-    private string? Review { get; set; }
+    protected string? ReviewDescription { get; set; }
     
     public ReviewSprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository) : base(name, startDate, endDate, scrumMaster, repository)
     {
@@ -19,7 +19,7 @@ public class ReviewSprint : Sprint
     
     public new void ToClosed()
     {
-        if(this.Review != null)
+        if(this.ReviewDescription != null)
         {
             CurrentState.ToClosed();
         }
