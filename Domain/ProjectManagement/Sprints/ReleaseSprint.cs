@@ -6,7 +6,7 @@ namespace Domain.ProjectManagement.Sprints;
 
 public class ReleaseSprint : Sprint
 {
-    public WorkflowResult WorkflowResult { get; set; }
+    public WorkflowResult? WorkflowResult { get; private set; }
     
     public ReleaseSprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository) : base(name, startDate, endDate, scrumMaster, repository)
     {

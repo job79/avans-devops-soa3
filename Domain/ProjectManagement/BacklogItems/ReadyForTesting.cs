@@ -4,7 +4,7 @@ namespace Domain.ProjectManagement.BacklogItems;
 
 public class ReadyForTesting : IBacklogItemState
 {
-    private BacklogItem _backlogItem;
+    private readonly BacklogItem _backlogItem;
     
     public ReadyForTesting(BacklogItem backlogItem)
     {

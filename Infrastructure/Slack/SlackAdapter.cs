@@ -3,6 +3,7 @@ using Domain.Account;
 
 namespace Infrastructure.Slack;
 
+// Adapter pattern
 public class SlackAdapter : ISendMethod
 {
     public void SendMessage(User user, string message)

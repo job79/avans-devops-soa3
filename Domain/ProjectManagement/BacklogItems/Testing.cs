@@ -1,5 +1,7 @@
 namespace Domain.ProjectManagement.BacklogItems;
 
+//State pattern
+
 public class Testing : IBacklogItemState
 {
     private BacklogItem _backlogItem;

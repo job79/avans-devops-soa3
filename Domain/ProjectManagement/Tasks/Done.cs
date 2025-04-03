@@ -1,12 +1,10 @@
 namespace Domain.ProjectManagement.Tasks;
 
+//State pattern
 public class Done : ITaskState
 {
-    private Task _task;
-    
     public Done(Task task)
     {
-        _task = task;
     }
     
     public void ToTodo()

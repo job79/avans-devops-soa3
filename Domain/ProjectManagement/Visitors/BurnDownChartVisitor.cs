@@ -3,6 +3,7 @@ using Domain.ProjectManagement.Export;
 
 namespace Domain.ProjectManagement.Visitors;
 
+// Visitor pattern
 public class BurnDownChartVisitor : Visitor
 {
     private int _totalStoryPoints = 0;
@@ -13,13 +14,13 @@ public class BurnDownChartVisitor : Visitor
         this._exportMethod = exportMethod;
     }
     
-    public new void VisitBacklogItem(BacklogItem backlogItem)
+    public override void VisitBacklogItem(BacklogItem backlogItem)
     {
         _totalStoryPoints += backlogItem.StoryPoints;
     }
 
-    public void Export()
+    public void Export(bool includeHeader, bool includeFooter)
     {
-        this._exportMethod.Export("burndown chart of story points");
+        this._exportMethod.Export($"burndown chart story points: {_totalStoryPoints}", includeHeader, includeFooter);
     }
 }

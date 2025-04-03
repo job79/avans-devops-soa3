@@ -2,13 +2,12 @@ using Domain.ProjectManagement.BacklogItems;
 
 namespace Domain.ProjectManagement.BacklogItems;
 
+//State pattern
+
 public class Done : IBacklogItemState
 {
-    private BacklogItem _backlogItem;
-    
     public Done(BacklogItem backlogItem)
     {
-        _backlogItem = backlogItem;
     }
     
     public void ToTodo()

@@ -12,16 +12,16 @@ public abstract class Sprint : CompositeComponent
    public Repository Repository { get;  }
    
    public ISprintState CurrentState { get; set; }
-   public Planned Planned { get; set; }
-   public InProgress InProgress { get; set; }
-   public Finished Finished { get; set; }  
-   public Released Released { get; set; }
-   public Review Review { get; set; }
-   public Closed Closed { get; set; }
+   public Planned Planned { get; }
+   public InProgress InProgress { get; }
+   public Finished Finished { get; }  
+   public Released Released { get; }
+   public Review Review { get; }
+   public Closed Closed { get; }
    
-   private readonly IList<ISubscriber<Sprint>> _subscribers = new List<ISubscriber<Sprint>>();
+   private readonly List<ISubscriber<Sprint>> _subscribers = new ();
 
-   public Sprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository)
+   protected Sprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository)
    {
       this.Name = name;
       this.StartDate = startDate;
@@ -43,6 +43,15 @@ public abstract class Sprint : CompositeComponent
    {
        visitor.VisitSprint(this);
        base.AcceptVisitor(visitor);
+   }
+   
+   public new void Add(IComponent component)
+   {
+       if(CurrentState is not Sprints.Planned)
+       {
+           throw new InvalidOperationException();
+       }
+       Components.Add(component);
    }
 
    public void ToInProgress()

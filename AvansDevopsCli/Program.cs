@@ -3,8 +3,10 @@ using Domain.ProjectManagement.BacklogItems;
 using Domain.ProjectManagement.Sprints;
 using Task = Domain.ProjectManagement.Tasks.Task;
 using Domain.Account;
+using Domain.ProjectManagement.Visitors;
 using Domain.SourceManagement;
 using Domain.Workflows;
+using DomainServices.ProjectManagement.Export;
 using DomainServices.ProjectManagement.Subscribers;
 using Infrastructure.Email;
 using Infrastructure.Slack;
@@ -44,6 +46,12 @@ var scrumMasterS = new SprintSubscriber(scrumMaster, slackAdapter);
 
 sprint.Subscribe(productOwnerS);
 sprint.Subscribe(scrumMasterS);
+
+var exportMethod = new ExportPdf();
+var visitor = new BurnDownChartVisitor(exportMethod);
+
+sprint.AcceptVisitor(visitor);
+visitor.Export(true, true);
 
 // var emailAdapter = new EmailAdapter();
 // var slackAdapter = new SlackAdapter();

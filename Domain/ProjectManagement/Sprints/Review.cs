@@ -1,8 +1,9 @@
 namespace Domain.ProjectManagement.Sprints;
 
+//State pattern
 public class Review : ISprintState
 {
-    private Sprint _sprint;
+    private readonly Sprint _sprint;
     
     public Review(Sprint sprint)
     {

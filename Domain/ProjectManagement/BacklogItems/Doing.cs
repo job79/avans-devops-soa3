@@ -2,9 +2,11 @@ using Domain.ProjectManagement.BacklogItems;
 
 namespace Domain.ProjectManagement.BacklogItems;
 
+//State pattern
+
 public class Doing : IBacklogItemState
 {
-    private BacklogItem _backlogItem;
+    private readonly BacklogItem _backlogItem;
     
     public Doing(BacklogItem backlogItem)
     {

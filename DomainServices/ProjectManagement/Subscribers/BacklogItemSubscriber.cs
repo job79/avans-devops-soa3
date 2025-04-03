@@ -4,10 +4,11 @@ using Domain.ProjectManagement.BacklogItems;
 
 namespace DomainServices.ProjectManagement.Subscribers;
 
+//Observer pattern
 public class BacklogItemSubscriber : ISubscriber<BacklogItem>
 {
-    private User _user;
-    private ISendMethod _sendMethod;
+    private readonly User _user;
+    private readonly ISendMethod _sendMethod;
     private IBacklogItemState? _previousState;
 
     public BacklogItemSubscriber(User user, ISendMethod sendMethod)

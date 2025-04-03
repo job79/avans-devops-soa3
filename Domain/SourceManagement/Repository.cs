@@ -2,38 +2,36 @@ using Domain.Workflows;
 
 namespace Domain.SourceManagement;
 
+// Template pattern
 public abstract class Repository
 {
     public string Name { get; }
-    public IList<Commit> Commits { get; } = new List<Commit>();
-    public IList<File> Files { get; } = new List<File>();
-    public IList<Branch> Branches { get; } = new List<Branch>();
-    public IList<Workflow> Workflows { get; } = new List<Workflow>();
+    public List<Commit> Commits { get; } = new();
+    public List<File> Files { get; } = new();
+    public List<Branch> Branches { get; } = new();
+    public List<Workflow> Workflows { get; } = new();
 
-    public Repository(string name)
+    protected Repository(string name)
     {
         this.Name = name;
     }
-    
-    public void Commit(Commit commit)
+
+    public virtual void Commit(Commit commit)
     {
         this.Commits.Add(commit);
     }
-    
+
     public abstract void Push();
     public abstract void Pull();
 
     public WorkflowResult RunWorkflows(WorkflowTrigger workflowTrigger)
     {
-        foreach (var workflow in this.Workflows)
+        foreach (var workflow in this.Workflows.Where(x => x.WorkflowTriggers.Contains(workflowTrigger)))
         {
-            if (workflow.WorkflowTriggers.Contains(workflowTrigger))
+            var result = workflow.Run();
+            if (!result.IsSuccessful)
             {
-                var result = workflow.Run();
-                if (!result.IsSuccessful)
-                {
-                    return result;
-                }
+                return result;
             }
         }
 

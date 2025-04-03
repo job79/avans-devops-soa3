@@ -1,5 +1,6 @@
 namespace Domain.ProjectManagement.Tasks;
 
+//State pattern
 public interface ITaskState
 {
     public void ToTodo();

@@ -1,12 +1,10 @@
 namespace Domain.ProjectManagement.Sprints;
 
+//State pattern
 public class Closed : ISprintState
 {
-    private Sprint _sprint;
-    
     public Closed(Sprint sprint)
     {
-        _sprint = sprint;
     }
     
     public void ToInProgress()

@@ -1,8 +1,9 @@
 namespace Domain.ProjectManagement.Sprints;
 
+//State pattern
 public class Finished : ISprintState
 {
-    private Sprint _sprint;
+    private readonly Sprint _sprint;
     
     public Finished(Sprint sprint)
     {

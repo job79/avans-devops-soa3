@@ -12,7 +12,7 @@ public class BacklogItem : CompositeComponent
     public User Tester { get; set; }
     public User? Developer { get; set; }
     public Sprint Sprint { get; }
-    public IList<Discussion> Discussions { get; } = new List<Discussion>();
+    public List<Discussion> Discussions { get; } = new ();
     
     public IBacklogItemState CurrentState { get; private set; }
     public Todo Todo { get; set; }
@@ -22,7 +22,7 @@ public class BacklogItem : CompositeComponent
     public Tested Tested { get; set; }
     public Done Done { get; set; }
     
-    private readonly IList<ISubscriber<BacklogItem>> _subscribers = new List<ISubscriber<BacklogItem>>();
+    private readonly List<ISubscriber<BacklogItem>> _subscribers = new ();
 
     public BacklogItem(string title, string description, int storyPoints, Sprint sprint, Tester tester)
     {

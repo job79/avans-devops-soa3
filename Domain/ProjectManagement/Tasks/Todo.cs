@@ -1,8 +1,9 @@
 namespace Domain.ProjectManagement.Tasks;
 
+//State pattern
 public class Todo : ITaskState
 {
-    private Task _task;
+    private readonly Task _task;
     
     public Todo(Task task)
     {

@@ -1,5 +1,6 @@
 namespace Domain.ProjectManagement.Sprints;
 
+//State pattern
 public interface ISprintState
 {
     public void ToInProgress();

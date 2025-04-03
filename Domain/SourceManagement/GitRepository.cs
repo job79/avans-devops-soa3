@@ -1,12 +1,13 @@
 namespace Domain.SourceManagement;
 
+// Template pattern
 public class GitRepository : Repository
 {
     public GitRepository(string name) : base(name)
     {
     }
     
-    public new void Commit(Commit commit)
+    public override void Commit(Commit commit)
     {
         base.Commit(commit);
         Console.WriteLine("[GitRepository] Commiting data to git repository");

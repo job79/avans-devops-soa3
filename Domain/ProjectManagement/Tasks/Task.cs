@@ -2,7 +2,7 @@ using Domain.Account;
 
 namespace Domain.ProjectManagement.Tasks;
 
-public class Task : Component
+public class Task : IComponent
 {
     public string Title { get; }
     public string Description { get; }
@@ -12,7 +12,7 @@ public class Task : Component
     public Doing Doing { get; }
     public Done Done { get; }
 
-    private User Assignee { get; }
+    private User? Assignee { get; set; }
     
     
     public Task(string title, string description)
@@ -47,7 +47,7 @@ public class Task : Component
         CurrentState = taskState;
     }
 
-    public override void AcceptVisitor(Visitor visitor)
+    public void AcceptVisitor(Visitor visitor)
     {
         visitor.VisitTask(this);
     }

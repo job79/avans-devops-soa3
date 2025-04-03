@@ -3,6 +3,7 @@ using Domain.Account;
 
 namespace Infrastructure.Email;
 
+// Adapter pattern
 public class EmailAdapter : ISendMethod
 {
     public void SendMessage(User user, string message)

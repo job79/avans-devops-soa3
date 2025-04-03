@@ -4,10 +4,11 @@ using Domain.ProjectManagement.Discussions;
 
 namespace DomainServices.ProjectManagement.Subscribers;
 
+//Observer pattern
 public class DiscussionSubscriber : ISubscriber<Discussion>
 {
-    private User _user;
-    private ISendMethod _sendMethod;
+    private readonly User _user;
+    private readonly ISendMethod _sendMethod;
     
     public DiscussionSubscriber(User user, ISendMethod sendMethod)
     {

@@ -1,17 +1,18 @@
 namespace Domain.ProjectManagement;
 
-public abstract class CompositeComponent : Component
+// Composite pattern
+public abstract class CompositeComponent : IComponent
 {
-    public List<Component> Components { get; } = new();
+    public List<IComponent> Components { get; } = new();
     
-    public void Add(Component component)
+    public void Add(IComponent component)
     {
         Components.Add(component);
     }
 
-    public override void AcceptVisitor(Visitor visitor)
+    public virtual void AcceptVisitor(Visitor visitor)
     {
-        foreach (Component component in Components)
+        foreach (IComponent component in Components)
         {
             component.AcceptVisitor(visitor);
         }

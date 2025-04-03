@@ -8,13 +8,14 @@ public class Discussion
    public string Title { get; } 
    public User Author => this.Posts[0].Author;
    public BacklogItem BacklogItem { get; }
-   public IList<Post> Posts { get; }
-   private readonly IList<ISubscriber<Discussion>> _subscribers = new List<ISubscriber<Discussion>>();
+   public List<Post> Posts { get; }
+   private readonly List<ISubscriber<Discussion>> _subscribers = new ();
 
    public Discussion(string title, Post post, BacklogItem backlogItem)
    {
       this.Title = title;
       this.Posts = new List<Post> { post };
+      this.BacklogItem = backlogItem;
    }
 
    public void AddPost(Post post)

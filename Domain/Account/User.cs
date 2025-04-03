@@ -1,6 +1,6 @@
 namespace Domain.Account;
 
-public class User
+public abstract class User
 {
     public string Name { get; }
     public string Email { get; }

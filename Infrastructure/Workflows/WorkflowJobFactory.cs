@@ -9,7 +9,8 @@ using Infrastructure.Workflows.UtilityJobs;
 
 namespace Infrastructure.Workflows;
 
-public class WorkflowJobFactory
+// Simple factory pattern
+public static class WorkflowJobFactory
 {
     public static WorkflowJob Create(string name, string settings, WorkflowJob? nextJob)
     {

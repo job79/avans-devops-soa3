@@ -4,10 +4,11 @@ using Domain.ProjectManagement.Sprints;
 
 namespace DomainServices.ProjectManagement.Subscribers;
 
+//Observer pattern
 public class SprintSubscriber : ISubscriber<Sprint>
 {
-    private User _user;
-    private ISendMethod _sendMethod;
+    private readonly User _user;
+    private readonly ISendMethod _sendMethod;
 
     public SprintSubscriber(User user, ISendMethod sendMethod)
     {
@@ -20,12 +21,12 @@ public class SprintSubscriber : ISubscriber<Sprint>
         switch (sprint.CurrentState)
         {
             case Released:
-                var isSuccesful = sprint is ReleaseSprint { WorkflowResult.IsSuccessful: true };
-                if (!isSuccesful && sprint.ScrumMaster == this._user)
+                var isSuccessful = sprint is ReleaseSprint { WorkflowResult.IsSuccessful: true };
+                if (!isSuccessful && sprint.ScrumMaster == this._user)
                 {
                     this._sendMethod.SendMessage(this._user, "Sprint release pipeline failed");
                 }
-                else if (isSuccesful)
+                else if (isSuccessful)
                 {
                     this._sendMethod.SendMessage(this._user, "Sprint release pipeline was successful");
                 }

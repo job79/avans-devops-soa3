@@ -1,8 +1,9 @@
 namespace Domain.ProjectManagement.Tasks;
 
+//State pattern
 public class Doing : ITaskState
 {
-    private Task _task;
+    private readonly Task _task;
     
     public Doing(Task task)
     {

@@ -1,5 +1,7 @@
 namespace Domain.ProjectManagement.BacklogItems;
 
+//State pattern
+
 public interface IBacklogItemState
 {
     public void ToTodo();

@@ -1,10 +1,12 @@
 namespace Domain.Workflows;
 
+// Chain of Responsibility pattern
+
 public abstract class WorkflowJob
 {
     public WorkflowJob? Next { get; }
 
-    public WorkflowJob(WorkflowJob? nextJob)
+    protected WorkflowJob(WorkflowJob? nextJob)
     {
         this.Next = nextJob;
     }
