@@ -26,6 +26,6 @@ public class TotalStoryPointsVisitor : Visitor
     
     public void Export(bool includeHeader, bool includeFooter)
     {
-        this._exportMethod.Export($"total story points: {_totalStoryPoints}", includeHeader, includeFooter);
+        this._exportMethod.Export($"Total story points: {_totalStoryPoints}", includeHeader, includeFooter);
     }
 }

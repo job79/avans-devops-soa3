@@ -4,7 +4,7 @@ using Domain.ProjectManagement.BacklogItems;
 
 namespace DomainServices.ProjectManagement.Subscribers;
 
-//Observer pattern
+// Observer pattern
 public class BacklogItemSubscriber : ISubscriber<BacklogItem>
 {
     private readonly User _user;
@@ -17,18 +17,18 @@ public class BacklogItemSubscriber : ISubscriber<BacklogItem>
         this._sendMethod = sendMethod;
     }
 
-    public void Update(BacklogItem sprint)
+    public void Update(BacklogItem backlogItem)
     {
-        bool notifyUser = (sprint.Tester == this._user && sprint.CurrentState is ReadyForTesting) ||
-                          (sprint.Sprint.ScrumMaster == this._user && sprint.CurrentState is Todo && this._previousState is Testing) ||
-                          (sprint.Developer == _user);
+        bool notifyUser = (backlogItem.Tester == this._user && backlogItem.CurrentState is ReadyForTesting) ||
+                          (backlogItem.Sprint.ScrumMaster == this._user && backlogItem.CurrentState is Todo && this._previousState is Testing) ||
+                          (backlogItem.Developer == _user);
 
         if (notifyUser)
         {
-            string state = sprint.CurrentState.GetType().Name;
-            string previousState = this._previousState?.GetType()?.Name ?? "-";
-            this._sendMethod.SendMessage(this._user, $"BacklogItem \"{sprint.Title}\" updated! Status: {previousState} -> {state}");
+            string state = backlogItem.CurrentState.GetType().Name;
+            string previousState = this._previousState?.GetType().Name ?? "-";
+            this._sendMethod.SendMessage(this._user, $"BacklogItem \"{backlogItem.Title}\" updated! Status: {previousState} -> {state}");
         }
-        this._previousState = sprint.CurrentState;
+        this._previousState = backlogItem.CurrentState;
     }
 }

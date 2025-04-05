@@ -7,7 +7,7 @@ public class Task : IComponent
     public string Title { get; }
     public string Description { get; }
     
-    ITaskState CurrentState { get; set; }
+    public ITaskState CurrentState { get; set; }
     public Todo Todo { get; }
     public Doing Doing { get; }
     public Done Done { get; }
@@ -27,7 +27,7 @@ public class Task : IComponent
         CurrentState = Todo;
     }
     
-    public void ToDo()
+    public void ToTodo()
     {
         CurrentState.ToTodo();
     }

@@ -16,8 +16,8 @@ public class DiscussionSubscriber : ISubscriber<Discussion>
         this._sendMethod = sendMethod;
     }
 
-    public void Update(Discussion sprint)
+    public void Update(Discussion discussion)
     {
-        this._sendMethod.SendMessage(this._user, $"Discussion \"{sprint.Title}\" has been updated! Total posts: {sprint.Posts.Count}");
+        this._sendMethod.SendMessage(this._user, $"Discussion \"{discussion.Title}\" has been updated! Total posts: {discussion.Posts.Count}");
     }
 }

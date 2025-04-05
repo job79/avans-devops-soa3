@@ -5,7 +5,7 @@ namespace Domain.ProjectManagement.Sprints;
 
 public class ReviewSprint : Sprint
 {
-    protected string? ReviewDescription { get; set; }
+    public string? ReviewDescription { get; set; }
     
     public ReviewSprint(string name, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Repository repository) : base(name, startDate, endDate, scrumMaster, repository)
     {
@@ -19,9 +19,10 @@ public class ReviewSprint : Sprint
     
     public new void ToClosed()
     {
-        if(this.ReviewDescription != null)
+        if(this.ReviewDescription == null)
         {
-            CurrentState.ToClosed();
+            throw new InvalidOperationException("ReviewSprint can't be closed without a ReviewDescription");
         }
+        CurrentState.ToClosed();
     }
 }

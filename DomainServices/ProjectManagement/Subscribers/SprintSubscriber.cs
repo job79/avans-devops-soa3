@@ -4,7 +4,7 @@ using Domain.ProjectManagement.Sprints;
 
 namespace DomainServices.ProjectManagement.Subscribers;
 
-//Observer pattern
+// Observer pattern
 public class SprintSubscriber : ISubscriber<Sprint>
 {
     private readonly User _user;

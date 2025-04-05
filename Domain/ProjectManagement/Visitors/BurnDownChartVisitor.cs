@@ -14,6 +14,11 @@ public class BurnDownChartVisitor : Visitor
         this._exportMethod = exportMethod;
     }
     
+    public int GetTotalStoryPoints()
+    {
+        return _totalStoryPoints;
+    }
+    
     public override void VisitBacklogItem(BacklogItem backlogItem)
     {
         _totalStoryPoints += backlogItem.StoryPoints;
@@ -21,6 +26,6 @@ public class BurnDownChartVisitor : Visitor
 
     public void Export(bool includeHeader, bool includeFooter)
     {
-        this._exportMethod.Export($"burndown chart story points: {_totalStoryPoints}", includeHeader, includeFooter);
+        this._exportMethod.Export($"Burndown chart story points: {_totalStoryPoints}", includeHeader, includeFooter);
     }
 }

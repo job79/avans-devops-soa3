@@ -12,7 +12,7 @@ public class ReleaseSprint : Sprint
     {
     }
     
-    public void ToRelease()
+    public void ToReleased()
     {
         WorkflowResult = this.Repository.RunWorkflows(WorkflowTrigger.OnRelease);
         CurrentState.ToRelease();

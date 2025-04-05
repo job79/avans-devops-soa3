@@ -22,6 +22,6 @@ public class Doing : ITaskState
     
     public void ToDone()
     {
-        _task.SetState(_task.Doing);
+        _task.SetState(_task.Done);
     }
 }
