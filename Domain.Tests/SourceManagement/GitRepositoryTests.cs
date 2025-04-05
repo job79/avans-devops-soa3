@@ -31,8 +31,11 @@ public class GitRepositoryTests
         this._repository.Commit(commit);
 
         // Assert
-        Assert.That(this._repository.Commits, Has.Count.EqualTo(2));
-        Assert.That(this._repository.Files, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(this._repository.Commits, Has.Count.EqualTo(2));
+            Assert.That(this._repository.Files, Has.Count.EqualTo(1));
+        });
     }
 
     [Test]
