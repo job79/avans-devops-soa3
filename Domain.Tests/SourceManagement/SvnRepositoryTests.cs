@@ -15,7 +15,7 @@ public class SvnRepositoryTests
     [SetUp]
     public void Setup()
     {
-        this._repository = new GitRepository("AvansDevops");
+        this._repository = new SvnRepository("AvansDevops");
         this._developer = new Developer("Job", "Job@gmail.com");
         this._firstCommit = new Commit("1", "fix: bug", this._developer, [new File("test.txt", "test")], null);
         this._repository.Commit(this._firstCommit);
