@@ -9,6 +9,7 @@ public class SvnRepository : Repository
     
     public override void Commit(Commit commit)
     {
+        base.Commit(commit);
         Console.WriteLine("[SvnRepository] Commiting data to svn repository");
     }
 
