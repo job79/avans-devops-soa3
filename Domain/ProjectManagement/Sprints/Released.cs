@@ -22,7 +22,7 @@ public class Released : ISprintState
 
     public void ToRelease()
     {
-        throw new InvalidOperationException();
+        _sprint.SetState(_sprint.Released);
     }
 
     public void ToReview()

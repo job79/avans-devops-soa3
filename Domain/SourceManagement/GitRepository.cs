@@ -15,6 +15,7 @@ public class GitRepository : Repository
 
     public override void Push()
     {
+        base.Push();
         Console.WriteLine("[GitRepository] Pushing data to git repository");
     }
 

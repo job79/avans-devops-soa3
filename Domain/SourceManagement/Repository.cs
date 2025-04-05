@@ -7,7 +7,7 @@ public abstract class Repository
 {
     public string Name { get; }
     public List<Commit> Commits { get; } = new();
-    public List<File> Files { get; } = new();
+    public Dictionary<string, File> Files { get; } = new();
     public List<Branch> Branches { get; } = new();
     public List<Workflow> Workflows { get; } = new();
 
@@ -19,9 +19,16 @@ public abstract class Repository
     public virtual void Commit(Commit commit)
     {
         this.Commits.Add(commit);
+        
+        // Should be extended so it handles deletions
+        commit.ChangedFiles.ForEach(f => this.Files[f.Path] = f);
     }
 
-    public abstract void Push();
+    public virtual void Push()
+    {
+        this.RunWorkflows(WorkflowTrigger.OnPush);
+    }
+    
     public abstract void Pull();
 
     public WorkflowResult RunWorkflows(WorkflowTrigger workflowTrigger)

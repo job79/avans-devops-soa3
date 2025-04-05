@@ -12,11 +12,6 @@ public class SvnRepository : Repository
         Console.WriteLine("[SvnRepository] Commiting data to svn repository");
     }
 
-    public override void Push()
-    {
-        // SVN doesn't push data, data is pushed automatically on commit
-    }
-
     public override void Pull()
     {
         Console.WriteLine("[SvnRepository] Pulling data from svn repository");
