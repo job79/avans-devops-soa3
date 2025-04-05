@@ -21,7 +21,6 @@ public class SprintAddBacklogItemTests
             new GitRepository("AvansDevops")
         );
         this._tester = new Tester("Tester", "tester@gmail.com");
- 
     }
 
     [Test]
