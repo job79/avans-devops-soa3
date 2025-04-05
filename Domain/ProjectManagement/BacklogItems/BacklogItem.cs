@@ -30,7 +30,7 @@ public class BacklogItem : CompositeComponent
 	    get => _developer;
 	    set
 	    {
-		    if (this.Sprint.Components.Count(x => x is BacklogItem b && b.Developer == value && b.CurrentState is not BacklogItems.Done) > 0)
+		    if (this.Sprint.Components.Any(x => x is BacklogItem b && b.Developer == value && b.CurrentState is not BacklogItems.Done))
 		    {
 			    throw new InvalidOperationException($"This developer is already working on another backlog item");
 		    }

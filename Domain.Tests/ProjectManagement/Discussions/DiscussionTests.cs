@@ -1,5 +1,4 @@
 using Domain.Account;
-using Domain.ProjectManagement;
 using Domain.ProjectManagement.BacklogItems;
 using Domain.ProjectManagement.Discussions;
 using Domain.ProjectManagement.Sprints;
@@ -12,7 +11,6 @@ public class DiscussionTests
     private Sprint _sprint;
     private Tester _tester;
     private Developer _developer;
-    private Project _project;
 
     [SetUp]
     public void Setup()
@@ -29,7 +27,7 @@ public class DiscussionTests
     }
 
     [Test]
-    public void TestAddingPostToOpenSprint()
+    public void TestAddingPostToOpenBacklogItem()
     {
         // Arrange
         var backlogItem = new BacklogItem("Make unit tests", "Implement unit test for backlogItems", 2, _sprint, _tester);
@@ -44,21 +42,39 @@ public class DiscussionTests
         discussion.AddPost(secondPost);
         
         //Assert
-        Assert.That(discussion.Posts.Count, Is.EqualTo(2));
+        Assert.That(discussion.Posts, Has.Count.EqualTo(2));
     }
     
     [Test]
-    public void TestAddingPostToClosedSprint()
+    public void TestAddingPostToClosedBacklogItem()
     {
         // Arrange
         var backlogItem = new BacklogItem("Make unit tests", "Implement unit test for backlogItems", 2, _sprint, _tester);
-        var backlogItem2 = new BacklogItem("Make unit tests", "Implement unit test for backlogItems", 3, _sprint, _tester);
+        _sprint.Add(backlogItem);
         
+        var post = new Post("Post", _developer);
+        var secondPost = new Post("Second Post", _developer);
+        var discussion = new Discussion("Discussion", post, backlogItem);
 
-        // Act
-        // var totalStory
+        // Act & Assert
+        backlogItem.AddDiscussion(discussion);
+        backlogItem.SetState(backlogItem.Done);
+        Assert.Throws<InvalidOperationException>(() => discussion.AddPost(secondPost));
+        Assert.That(discussion.Posts, Has.Count.EqualTo(1));
+    }
+    
+    [Test]
+    public void TestAddingDiscussionToClosedBacklogItems()
+    {
+        // Arrange
+        var backlogItem = new BacklogItem("Make unit tests", "Implement unit test for backlogItems", 2, _sprint, _tester);
+        backlogItem.SetState(backlogItem.Done);
+        _sprint.Add(backlogItem);
         
-        //Assert
-        // Assert.That(discussion.Posts.Count, Is.EqualTo(1));
+        var post = new Post("Post", _developer);
+        var discussion = new Discussion("Discussion", post, backlogItem);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => backlogItem.AddDiscussion(discussion));
     }
 }
